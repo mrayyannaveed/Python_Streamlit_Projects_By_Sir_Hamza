@@ -18,6 +18,7 @@ if "random_number" not in st.session_state:
     st.session_state.random_number = random.randint(1, 100)
     st.session_state.attempts = 0
     st.session_state.game_over = False
+    st.session_state.user_guess = 1  # Store the user's guess in session state
 
 # Display attempts left
 def display_attempts_left(attempts):
@@ -29,6 +30,7 @@ user_guess = st.number_input(
     min_value=1,
     max_value=100,
     step=1,
+    value=st.session_state.user_guess,  # Use session state to retain the user's guess
     key=f"guess_{st.session_state.attempts}"  # Unique key for each attempt
 )
 
@@ -48,6 +50,9 @@ if st.button("Submit"):
             st.warning("👆 The number is lower than your guess.")
             st.session_state.attempts += 1
 
+        # Store the user's guess in session state
+        st.session_state.user_guess = user_guess
+
         display_attempts_left(st.session_state.attempts)
 
         # Check if the user has run out of attempts
@@ -55,15 +60,15 @@ if st.button("Submit"):
             st.error(f"🚨 You have run out of attempts. The number was {st.session_state.random_number}.")
             st.session_state.game_over = True
 
-
 # Display the correct number if the game is over
 if st.session_state.game_over:
     st.markdown("---")
     st.markdown(f"**The correct number was:** {st.session_state.random_number}")
 
-
+# Restart button
 if st.button("Restart"):
     st.session_state.random_number = random.randint(1, 100)
     st.session_state.attempts = 0
     st.session_state.game_over = False
+    st.session_state.user_guess = 1  # Reset the user's guess
     st.rerun()
