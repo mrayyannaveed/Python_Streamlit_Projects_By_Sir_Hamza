@@ -42,6 +42,7 @@ if st.button("Submit"):
         # Validate the user's guess
         if user_guess == st.session_state.random_number:
             st.success("🎉 Congratulations! You guessed the number!")
+            st.balloons()
             st.session_state.game_over = True
         elif user_guess < st.session_state.random_number:
             st.warning("👇 The number is higher than your guess.")
@@ -64,6 +65,12 @@ if st.button("Submit"):
 if st.session_state.game_over:
     st.markdown("---")
     st.markdown(f"**The correct number was:** {st.session_state.random_number}")
+
+#Next Turn
+if st.button("Next Turn"):
+    if not st.session_state.game_over:
+        st.session_state.user_guess = 1  # Reset the user's guess
+        st.rerun()
 
 # Restart button
 if st.button("Restart"):
