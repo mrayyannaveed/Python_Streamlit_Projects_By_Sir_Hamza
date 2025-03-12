@@ -23,6 +23,8 @@ if text:
 
     st.markdown("## Vowel Count")
     st.write(f"### Number of vowels in the above paragraph:", str(sum(1 for char in text.lower() if char in 'aeiou')))
+    st.markdown("## Average Word Length")
+    st.write(f"### Your paragraph average word length is: {round(char_count / word_count,2)}")
 else: 
     st.warning("Please enter some text to analyze.")
 st.markdown("---")
@@ -56,14 +58,13 @@ else:
 st.markdown("---")
 st.markdown("## Word Search in Paragraph using *comparison* operator '=='")  
 para_search = st.text_input("Enter the word to search: ", key="para_search")
+if para_search:
+    for word in split_text:
+        if word.lower() == para_search.lower():
+            st.success(f"### Your paragraph contains word {para_search}")
 
-for word in split_text:
-    if word.lower() == para_search.lower():
-        st.success(f"### Your paragraph contains word {word}")
-
-st.write(f"### Your paragraph average word length is: {round(char_count / word_count,2)}")
 st.markdown("---")
-
-st.markdown("## Word search using *in* membership operator")
-if para_search.lower() in text.lower():
-    st.success(f"### Your text contains the word {para_search}")
+if para_search:
+    st.markdown("## Word search using *in* membership operator")
+    if para_search.lower() in text.lower():
+        st.success(f"### Your text contains the word {para_search}")
